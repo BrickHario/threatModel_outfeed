@@ -1,8 +1,10 @@
 {
+  "version": "2.6.1",
   "summary": {
     "title": "Outfeed STRIDE Threat Model",
     "owner": "Nicht angegeben",
-    "description": "Outfeed ist eine App, mit der Nutzer ihren Kleiderschrank digitalisieren, Outfits planen und Looks zusammenstellen können. Kleidung wird fotografiert und organisiert, Meinungen von Freunden eingeholt und Doppelkäufe vermieden – praktisch für Geschenke, Planung und Styling unterwegs. Dieses Threat-Dragon-Modell wurde aus stride-threats.docx erstellt. Alle 15 dort beschriebenen Threats wurden übernommen; Komponenten und Beziehungen sind nur aus den im Dokument genannten Bereichen und Interaktionen abgeleitet."
+    "description": "Outfeed ist eine App, mit der Nutzer ihren Kleiderschrank digitalisieren, Outfits planen und Looks zusammenstellen können. Kleidung wird fotografiert und organisiert, Meinungen von Freunden eingeholt und Doppelkäufe vermieden – praktisch für Geschenke, Planung und Styling unterwegs. Dieses Threat-Dragon-Modell wurde aus stride-threats.docx erstellt. Alle 15 dort beschriebenen Threats wurden übernommen; Komponenten und Beziehungen sind nur aus den im Dokument genannten Bereichen und Interaktionen abgeleitet.",
+    "id": "outfeed-stride-threat-model"
   },
   "detail": {
     "contributors": [
@@ -16,6 +18,1352 @@
         "thumbnail": "./public/content/images/thumbnail.stride.jpg",
         "diagramType": "STRIDE",
         "id": 0,
+        "version": "2.6.1",
+        "placeholder": "Outfeed STRIDE Diagram",
+        "description": "Outfeed STRIDE Diagram mit allen übernommenen Threats, Komponenten und Beziehungen.",
+        "cells": [
+          {
+            "type": "tm.Actor",
+            "size": {
+              "width": 170,
+              "height": 80
+            },
+            "position": {
+              "x": 40,
+              "y": 250
+            },
+            "angle": 0,
+            "id": "3fdbc46e-1603-48f7-af48-f9eb307c96b8",
+            "z": 1,
+            "hasOpenThreats": false,
+            "description": "Person, die Outfeed verwendet: Kleiderschrank digitalisieren, Outfits planen, Looks zusammenstellen, Kleidung fotografieren/organisieren, Meinungen von Freunden einholen und Doppelkäufe vermeiden.",
+            "outOfScope": false,
+            "threats": [],
+            "attrs": {
+              ".element-shape": {
+                "class": "element-shape hasNoOpenThreats isInScope"
+              },
+              "text": {
+                "text": "Outfeed Nutzer"
+              },
+              ".element-text": {
+                "class": "element-text hasNoOpenThreats isInScope"
+              },
+              "body": {
+                "stroke": "#333333",
+                "strokeWidth": 2,
+                "strokeDasharray": null
+              }
+            },
+            "data": {
+              "name": "Outfeed Nutzer",
+              "type": "tm.Actor",
+              "hasOpenThreats": false,
+              "outOfScope": false,
+              "description": "Person, die Outfeed verwendet: Kleiderschrank digitalisieren, Outfits planen, Looks zusammenstellen, Kleidung fotografieren/organisieren, Meinungen von Freunden einholen und Doppelkäufe vermeiden."
+            },
+            "shape": "tm.Actor",
+            "zIndex": 1
+          },
+          {
+            "type": "tm.Actor",
+            "size": {
+              "width": 170,
+              "height": 80
+            },
+            "position": {
+              "x": 40,
+              "y": 430
+            },
+            "angle": 0,
+            "id": "9a36ab9b-aeee-4d10-9ba7-06142f9de002",
+            "z": 2,
+            "hasOpenThreats": false,
+            "description": "Im Dokument genannte externe Rolle: Freundschaftsanfragen, Profilzugriffe, Credential Stuffing, Bots, direkte/API-nahe Angriffe und Manipulationsversuche.",
+            "outOfScope": false,
+            "threats": [],
+            "attrs": {
+              ".element-shape": {
+                "class": "element-shape hasNoOpenThreats isInScope"
+              },
+              "text": {
+                "text": "Freund / Angreifer"
+              },
+              ".element-text": {
+                "class": "element-text hasNoOpenThreats isInScope"
+              },
+              "body": {
+                "stroke": "#333333",
+                "strokeWidth": 2,
+                "strokeDasharray": null
+              }
+            },
+            "data": {
+              "name": "Freund / Angreifer",
+              "type": "tm.Actor",
+              "hasOpenThreats": false,
+              "outOfScope": false,
+              "description": "Im Dokument genannte externe Rolle: Freundschaftsanfragen, Profilzugriffe, Credential Stuffing, Bots, direkte/API-nahe Angriffe und Manipulationsversuche."
+            },
+            "shape": "tm.Actor",
+            "zIndex": 2
+          },
+          {
+            "type": "tm.Process",
+            "size": {
+              "width": 230,
+              "height": 100
+            },
+            "position": {
+              "x": 310,
+              "y": 250
+            },
+            "angle": 0,
+            "id": "ec299c2e-c762-4180-a5bb-122d0377bcf9",
+            "z": 3,
+            "hasOpenThreats": true,
+            "description": "Clientseitige Outfeed-Logik aus den genannten Dateien wie register.tsx, edit.tsx, details/[id].tsx, useImageUpload.ts, set-outfeed-details.tsx, create-outfeed.tsx und app.json.",
+            "outOfScope": false,
+            "threats": [
+              {
+                "threatId": "d752b446-0394-4224-8571-8b3b4057a939",
+                "number": 11,
+                "title": "Übermäßiger Zugriff auf Fotos",
+                "type": "Information disclosure",
+                "modelType": "STRIDE",
+                "status": "Open",
+                "severity": "Medium",
+                "score": "Original-Risiko: Mittel | Original-Status: teilweise",
+                "description": "Gefahr: App greift auf mehr Bilder zu als notwendig.\nKategorie: Information Disclosure.\nRisiko: Mittel.\nStatus aus Dokument: teilweise.\nTechnische Belege: Die App fragt Foto-/Kamera-Berechtigungen mit erklärenden iOS-Strings an (app.json line 22) und ImagePicker wird gezielt für Auswahl verwendet. Ob iOS “limited library” sauber genutzt wird, ist im Code nicht explizit erkennbar.",
+                "mitigation": "Minimalprinzip bei Berechtigungen. Transparente Nutzerabfragen.",
+                "ruleId": "4e467c13-d232-43d7-ba82-3d23e1afd335",
+                "$$hashKey": "object:1011"
+              },
+              {
+                "threatId": "eb6580a7-f6a6-42cd-98e4-34800db54c24",
+                "number": 15,
+                "title": "Ungewolltes Teilen privater Inhalte",
+                "type": "Information disclosure",
+                "modelType": "STRIDE",
+                "status": "Open",
+                "severity": "High",
+                "score": "Original-Risiko: Hoch | Original-Status: teilweise",
+                "description": "Gefahr: Private Kleidung wird versehentlich geteilt.\nKategorie: Information Disclosure.\nRisiko: Hoch.\nStatus aus Dokument: teilweise.\nTechnische Belege: Kleidung hat Public/Private UI und startet privat (edit.tsx line 98, edit.tsx line 442). Outfits starten dagegen public und ich sehe keinen Bestätigungsdialog vor dem Veröffentlichen (set-outfeed-details.tsx line 210). Durch die offenen RLS-Policies (wardrobe_items, outfits) können auch als privat markierte Inhalte öffentlich ausgelesen werden.",
+                "mitigation": "Bestätigungsdialoge vor dem Teilen. Klare UI für Sichtbarkeitseinstellungen.",
+                "ruleId": "9ccde311-4ad1-4fee-9298-1c520d3d5cda",
+                "$$hashKey": "object:1015"
+              }
+            ],
+            "attrs": {
+              ".element-shape": {
+                "class": "element-shape hasOpenThreats isInScope"
+              },
+              "text": {
+                "text": "Outfeed App-Client / UI"
+              },
+              ".element-text": {
+                "class": "element-text hasOpenThreats isInScope"
+              },
+              "body": {
+                "stroke": "#d0021b",
+                "strokeWidth": 2,
+                "strokeDasharray": null
+              }
+            },
+            "data": {
+              "name": "Outfeed App-Client / UI",
+              "type": "tm.Process",
+              "hasOpenThreats": true,
+              "outOfScope": false,
+              "description": "Clientseitige Outfeed-Logik aus den genannten Dateien wie register.tsx, edit.tsx, details/[id].tsx, useImageUpload.ts, set-outfeed-details.tsx, create-outfeed.tsx und app.json."
+            },
+            "shape": "tm.Process",
+            "zIndex": 3
+          },
+          {
+            "type": "tm.Process",
+            "size": {
+              "width": 220,
+              "height": 100
+            },
+            "position": {
+              "x": 640,
+              "y": 70
+            },
+            "angle": 0,
+            "id": "a6ff2c7b-3c55-4f17-b8b2-80e8346c7f27",
+            "z": 4,
+            "hasOpenThreats": true,
+            "description": "Supabase Auth mit PKCE im Client, Auth-Rate-Limit, deaktivierter MFA und deaktivierten E-Mail-Confirmations.",
+            "outOfScope": false,
+            "threats": [
+              {
+                "threatId": "084c9088-9e74-4b7b-a2ad-9ac95a1fe492",
+                "number": 1,
+                "title": "Account-Übernahme (Credential Stuffing)",
+                "type": "Spoofing",
+                "modelType": "STRIDE",
+                "status": "Open",
+                "severity": "High",
+                "score": "Original-Risiko: Hoch – da vollständiger Zugriff auf Benutzerkonto und private Daten möglich ist. | Original-Status: teilweise",
+                "description": "Gefahr: Angreifer nutzen geleakte Zugangsdaten aus anderen Plattformen, um sich automatisiert in Benutzerkonten einzuloggen.\nKategorie: Spoofing.\nRisiko: Hoch – da vollständiger Zugriff auf Benutzerkonto und private Daten möglich ist.\nStatus aus Dokument: teilweise.\nTechnische Belege: Supabase Auth nutzt PKCE im Client (lib/supabase.ts line 7) und Supabase rate-limitiert Sign-in/Sign-up auf 30 Requests/5 min (supabase/config.toml line 200). MFA ist deaktiviert (supabase/config.toml line 295), E-Mail-Confirmations sind aus (supabase/config.toml line 219), keine ungewöhnliche Login-Erkennung im Code gefunden.",
+                "mitigation": "Implementierung von Multi-Faktor-Authentifizierung (MFA / 2FA). Rate Limiting und Schutz gegen Brute-Force-Angriffe. Überwachung ungewöhnlicher Login-Aktivitäten.",
+                "ruleId": "0c1c8ab8-3de0-405f-822b-919c3684081c",
+                "$$hashKey": "object:1001"
+              },
+              {
+                "threatId": "56725d5d-77d1-46bf-bcec-c0f66d5ef9c9",
+                "number": 2,
+                "title": "Fake Accounts / Bots",
+                "type": "Spoofing",
+                "modelType": "STRIDE",
+                "status": "Open",
+                "severity": "Medium",
+                "score": "Original-Risiko: Mittel – kann Plattformvertrauen und Sicherheit beeinträchtigen. | Original-Status: NICHT BEHOBEN",
+                "description": "Gefahr: Automatisierte oder gefälschte Accounts werden erstellt, um Spam oder Social Engineering durchzuführen.\nKategorie: Spoofing.\nRisiko: Mittel – kann Plattformvertrauen und Sicherheit beeinträchtigen.\nStatus aus Dokument: NICHT BEHOBEN.\nTechnische Belege: Registrierung läuft direkt über supabase.auth.signUp (register.tsx line 149). CAPTCHA ist nur auskommentiert (supabase/config.toml line 207), E-Mail-Verifikation ist deaktiviert. Username-Validierung prüft nur Länge, keine Bot-Abwehr (constants/username.ts line 6).",
+                "mitigation": "CAPTCHA bei Registrierung. E-Mail-Verifikation. Erkennung ungewöhnlicher Account-Aktivitäten.",
+                "ruleId": "21763aaa-e9f8-4db3-9724-8a911733cf25",
+                "$$hashKey": "object:1002"
+              }
+            ],
+            "attrs": {
+              ".element-shape": {
+                "class": "element-shape hasOpenThreats isInScope"
+              },
+              "text": {
+                "text": "Supabase Auth"
+              },
+              ".element-text": {
+                "class": "element-text hasOpenThreats isInScope"
+              },
+              "body": {
+                "stroke": "#d0021b",
+                "strokeWidth": 2,
+                "strokeDasharray": null
+              }
+            },
+            "data": {
+              "name": "Supabase Auth",
+              "type": "tm.Process",
+              "hasOpenThreats": true,
+              "outOfScope": false,
+              "description": "Supabase Auth mit PKCE im Client, Auth-Rate-Limit, deaktivierter MFA und deaktivierten E-Mail-Confirmations."
+            },
+            "shape": "tm.Process",
+            "zIndex": 4
+          },
+          {
+            "type": "tm.Process",
+            "size": {
+              "width": 260,
+              "height": 110
+            },
+            "position": {
+              "x": 640,
+              "y": 250
+            },
+            "angle": 0,
+            "id": "574f50e7-d238-4d82-bff0-b203d4270b51",
+            "z": 5,
+            "hasOpenThreats": true,
+            "description": "Direkte API-Requests und serverseitige Zugriffskontrolle/RLS-Policies; im Dokument als zentrale Schwachstelle beschrieben.",
+            "outOfScope": false,
+            "threats": [
+              {
+                "threatId": "14f5e6e1-258d-443f-92ab-e60b19a3f658",
+                "number": 3,
+                "title": "Manipulation von API-Requests",
+                "type": "Tampering",
+                "modelType": "STRIDE",
+                "status": "Open",
+                "severity": "High",
+                "score": "Original-Risiko: Hoch – kann zu ungewollter Veröffentlichung privater Daten führen. | Original-Status: nicht behoben/kritisch",
+                "description": "Gefahr: Ein Angreifer verändert API-Anfragen, z. B. Sichtbarkeit von Kleidung auf „public“ setzen.\nKategorie: Tampering.\nRisiko: Hoch – kann zu ungewollter Veröffentlichung privater Daten führen.\nStatus aus Dokument: nicht behoben/kritisch.\nTechnische Belege: Clientseitig werden teilweise Ownership-Prüfungen durchgeführt, z. B. owner_id setzen und Filter mit .eq(\"owner_id\", user.id), diese sind jedoch unvollständig und können umgangen werden. Serverseitig existieren RLS-Policies, diese sind jedoch fehlerhaft konfiguriert. Insbesondere erlaubt die Policy allow all auf wardrobe_items vollständigen Zugriff (SELECT, INSERT, UPDATE, DELETE) für alle Nutzer ohne Ownership-Prüfung. Zusätzlich erlaubt eine SELECT true-Policy auf outfits das Auslesen aller Outfits unabhängig vom Besitzer. Damit ist die serverseitige Zugriffskontrolle nicht wirksam, und Manipulationen von Daten über direkte API-Requests sind möglich.",
+                "mitigation": "Strikte serverseitige Validierung aller Eingaben. Autorisierungsprüfungen im Backend. Verwendung sicher signierter Tokens, z. B. JWT.",
+                "ruleId": "bed0baed-2727-4a94-abe6-fd109b735e56",
+                "$$hashKey": "object:1003"
+              },
+              {
+                "threatId": "299a2ed6-9a17-4bc2-bdd0-8221d237ba83",
+                "number": 9,
+                "title": "API Flooding",
+                "type": "Denial of service",
+                "modelType": "STRIDE",
+                "status": "Open",
+                "severity": "Medium",
+                "score": "Original-Risiko: Mittel | Original-Status: teilweise",
+                "description": "Gefahr: Massive Anzahl an Requests überlastet das Backend.\nKategorie: Denial of Service.\nRisiko: Mittel.\nStatus aus Dokument: teilweise.\nTechnische Belege: Supabase Auth hat Rate-Limits für Auth-Endpunkte; generelle API-/Profil-/Friendship-Requests haben im Code kein Rate-Limiting. Supabase API max_rows = 1000 begrenzt Antwortgröße (supabase/config.toml line 18), aber nicht Request-Frequenz.",
+                "mitigation": "Rate Limiting. API-Gateways einsetzen.",
+                "ruleId": "ac4b3dcb-30b6-4a9a-92f1-c6a23ed93af8",
+                "$$hashKey": "object:1009"
+              },
+              {
+                "threatId": "82e051d7-d7f8-412c-8fda-4de964804757",
+                "number": 14,
+                "title": "Manipulation von Outfits anderer Nutzer",
+                "type": "Elevation of privilege",
+                "modelType": "STRIDE",
+                "status": "Open",
+                "severity": "High",
+                "score": "Original-Risiko: Hoch | Original-Status: teilweise/riskant",
+                "description": "Gefahr: Unbefugte Änderungen an fremden Outfits.\nKategorie: Elevation of Privilege / Tampering.\nRisiko: Hoch.\nStatus aus Dokument: teilweise/riskant.\nTechnische Belege: Outfit-Update hat einen Owner-Filter (set-outfeed-details.tsx line 377). Aber Kleidung-Update filtert nur nach id, nicht nach owner_id (edit.tsx line 209); Wash/Repair-Updates ebenfalls nur nach Item-ID (details/[id].tsx line 320). Outfits sind durch Owner-Policies bei UPDATE und DELETE teilweise geschützt. Allerdings: wardrobe_items ist vollständig offen (allow all); outfit_items erlaubt Inserts unter Freundschaftsbedingungen. Dadurch können indirekte Manipulationen weiterhin möglich sein.",
+                "mitigation": "Strikte Ownership-Prüfung. Zugriff nur für autorisierte Nutzer.",
+                "ruleId": "523b5968-3d6f-452a-bd3b-e9478de3354c",
+                "$$hashKey": "object:1014"
+              }
+            ],
+            "attrs": {
+              ".element-shape": {
+                "class": "element-shape hasOpenThreats isInScope"
+              },
+              "text": {
+                "text": "Supabase API / RLS-Policies"
+              },
+              ".element-text": {
+                "class": "element-text hasOpenThreats isInScope"
+              },
+              "body": {
+                "stroke": "#d0021b",
+                "strokeWidth": 2,
+                "strokeDasharray": null
+              }
+            },
+            "data": {
+              "name": "Supabase API / RLS-Policies",
+              "type": "tm.Process",
+              "hasOpenThreats": true,
+              "outOfScope": false,
+              "description": "Direkte API-Requests und serverseitige Zugriffskontrolle/RLS-Policies; im Dokument als zentrale Schwachstelle beschrieben."
+            },
+            "shape": "tm.Process",
+            "zIndex": 5
+          },
+          {
+            "type": "tm.Store",
+            "size": {
+              "width": 290,
+              "height": 120
+            },
+            "position": {
+              "x": 1030,
+              "y": 70
+            },
+            "angle": 0,
+            "id": "79d9ead8-c06e-468d-94cb-26c8d2497236",
+            "z": 6,
+            "hasOpenThreats": true,
+            "description": "Datenbereiche für Kleidung, Outfits und outfit_items inklusive Tabellen wardrobe_items, outfits und Visibility-/Ownership-Logik.",
+            "outOfScope": false,
+            "threats": [
+              {
+                "threatId": "87942799-3d0e-4057-a7c7-db5f2b052205",
+                "number": 4,
+                "title": "Veränderung von Outfit-Daten",
+                "type": "Tampering",
+                "modelType": "STRIDE",
+                "status": "Open",
+                "severity": "High",
+                "score": "Original-Risiko: Hoch – verletzt Datenintegrität und Nutzervertrauen. | Original-Status: teilweise/riskant",
+                "description": "Gefahr: Unbefugte Nutzer manipulieren Outfits oder Kleidungsstücke anderer User.\nKategorie: Tampering.\nRisiko: Hoch – verletzt Datenintegrität und Nutzervertrauen.\nStatus aus Dokument: teilweise/riskant.\nTechnische Belege: Outfit-Update hat einen Owner-Filter (set-outfeed-details.tsx line 377). Aber Kleidung-Update filtert nur nach id, nicht nach owner_id (edit.tsx line 209); Wash/Repair-Updates ebenfalls nur nach Item-ID (details/[id].tsx line 320). Serverseitig existieren RLS-Policies, diese sind jedoch fehlerhaft: Die Tabelle wardrobe_items erlaubt durch eine allow all-Policy vollständigen Zugriff (SELECT, INSERT, UPDATE, DELETE) für alle Nutzer ohne Ownership-Prüfung. Dadurch können fremde Kleidungsstücke manipuliert werden.",
+                "mitigation": "Prüfung der Besitzrechte (Ownership) bei jeder Änderung. Zugriffskontrolle auf Ressourcen. Logging von Änderungen.",
+                "ruleId": "17a817c8-ac39-4fe2-b554-0d149c5b0b2e",
+                "$$hashKey": "object:1004"
+              },
+              {
+                "threatId": "c5501348-792d-4b77-a1f3-cb7b82d1035a",
+                "number": 7,
+                "title": "Fehlerhafte Sichtbarkeitslogik",
+                "type": "Information disclosure",
+                "modelType": "STRIDE",
+                "status": "Open",
+                "severity": "High",
+                "score": "Original-Risiko: Sehr hoch – betrifft direkt die Privatsphäre der Nutzer. | Original-Status: teilweise",
+                "description": "Gefahr: Private Kleidungsstücke werden unbeabsichtigt öffentlich sichtbar.\nKategorie: Information Disclosure.\nRisiko: Sehr hoch – betrifft direkt die Privatsphäre der Nutzer.\nStatus aus Dokument: teilweise.\nTechnische Belege: Fremde Closets/Outfits werden clientseitig auf public = true gefiltert (useWardrobe.ts line 32, category/[category].tsx line 222, create-outfeed.tsx line 340). Kleidung defaultet beim Edit/Create auf private (edit.tsx line 98). Aber Outfit-Erstellung defaultet auf public (set-outfeed-details.tsx line 210), sie sind jedoch serverseitig nicht abgesichert: wardrobe_items: allow all ignoriert das public-Feld vollständig; outfits: SELECT true erlaubt Zugriff auf alle Outfits. Private Inhalte können dadurch direkt über die API ausgelesen werden.",
+                "mitigation": "Strenge Zugriffskontrollen. Tests der Visibility-Logik. Default auf „private“ setzen.",
+                "ruleId": "3a66eb88-06d2-4db7-8a77-ab1fde51c72f",
+                "$$hashKey": "object:1007"
+              }
+            ],
+            "attrs": {
+              ".element-shape": {
+                "class": "element-shape hasOpenThreats isInScope"
+              },
+              "text": {
+                "text": "Kleidung / Outfits / outfit_items"
+              },
+              ".element-text": {
+                "class": "element-text hasOpenThreats isInScope"
+              },
+              "body": {
+                "stroke": "#d0021b",
+                "strokeWidth": 2,
+                "strokeDasharray": null
+              }
+            },
+            "data": {
+              "name": "Kleidung / Outfits / outfit_items",
+              "type": "tm.Store",
+              "hasOpenThreats": true,
+              "outOfScope": false,
+              "description": "Datenbereiche für Kleidung, Outfits und outfit_items inklusive Tabellen wardrobe_items, outfits und Visibility-/Ownership-Logik."
+            },
+            "shape": "tm.Store",
+            "zIndex": 6
+          },
+          {
+            "type": "tm.Store",
+            "size": {
+              "width": 290,
+              "height": 110
+            },
+            "position": {
+              "x": 1030,
+              "y": 250
+            },
+            "angle": 0,
+            "id": "972bea02-0f05-411d-83f8-0e6a897d6275",
+            "z": 7,
+            "hasOpenThreats": true,
+            "description": "Foto- und Bild-Upload, ImagePicker, Supabase Storage-Limit und fehlende echte Dateisignatur-/Malware-/EXIF-Behandlung.",
+            "outOfScope": false,
+            "threats": [
+              {
+                "threatId": "1b358d97-5bca-482d-a9a1-b725346e02d5",
+                "number": 5,
+                "title": "Bild-Upload mit Schadcode",
+                "type": "Tampering",
+                "modelType": "STRIDE",
+                "status": "Open",
+                "severity": "High",
+                "score": "Original-Risiko: Hoch – kann Backend oder andere Nutzer gefährden. | Original-Status: teilweise",
+                "description": "Gefahr: Angreifer laden manipulierte Dateien hoch, die Schadcode enthalten oder Sicherheitslücken ausnutzen.\nKategorie: Tampering.\nRisiko: Hoch – kann Backend oder andere Nutzer gefährden.\nStatus aus Dokument: teilweise.\nTechnische Belege: Upload verlangt angemeldeten User (useImageUpload.ts line 49) und ImagePicker beschränkt Auswahl auf Bilder (useImageUpload.ts line 23). Supabase Storage hat global 50 MiB Limit (supabase/config.toml line 112). Es gibt eine Sightengine-Moderation für offensive Inhalte (image-moderation/index.ts line 17), aber das ist kein Malware-Scanning und keine echte Dateityp-Signaturprüfung.",
+                "mitigation": "Validierung von Dateitypen und -größen. Malware-Scanning der Uploads. Speicherung in isolierter Umgebung.",
+                "ruleId": "128e548d-2a9a-4504-8681-f04a31ab90ea",
+                "$$hashKey": "object:1005"
+              },
+              {
+                "threatId": "f362992c-59a9-42df-97d8-f72199d8fdec",
+                "number": 8,
+                "title": "Überlastung durch Bild-Uploads",
+                "type": "Denial of service",
+                "modelType": "STRIDE",
+                "status": "Open",
+                "severity": "Medium",
+                "score": "Original-Risiko: Mittel | Original-Status: teilweise",
+                "description": "Gefahr: Massenuploads führen zu Ressourcenerschöpfung.\nKategorie: Denial of Service.\nRisiko: Mittel.\nStatus aus Dokument: teilweise.\nTechnische Belege: Supabase Storage Limit 50 MiB vorhanden. Kein Client-Limit vor dem Upload, keine Upload-Rate-Limits im App-Code, keine Queue/Backpressure sichtbar.",
+                "mitigation": "Upload-Limits definieren. Skalierbare Infrastruktur nutzen.",
+                "ruleId": "ee7b7e64-fc5a-4558-a968-5e88b43b6080",
+                "$$hashKey": "object:1008"
+              },
+              {
+                "threatId": "a6521f74-448b-4a75-a412-4820a6d00a0b",
+                "number": 12,
+                "title": "EXIF-Daten-Leak",
+                "type": "Information disclosure",
+                "modelType": "STRIDE",
+                "status": "Open",
+                "severity": "Medium",
+                "score": "Original-Risiko: Mittel | Original-Status: NICHT BEHOBEN",
+                "description": "Gefahr: Standortdaten in Bildern werden ungewollt preisgegeben.\nKategorie: Information Disclosure.\nRisiko: Mittel.\nStatus aus Dokument: NICHT BEHOBEN.\nTechnische Belege: Es gibt keine explizite EXIF-/Metadata-Entfernung. ImagePicker mit Editing/Qualität kann Metadaten reduzieren (useImageUpload.ts line 23), aber das ist kein garantierter Security-Fix.",
+                "mitigation": "Entfernen von Metadaten vor Speicherung.",
+                "ruleId": "17d539df-612f-488b-9d5b-f2490bc78168",
+                "$$hashKey": "object:1012"
+              }
+            ],
+            "attrs": {
+              ".element-shape": {
+                "class": "element-shape hasOpenThreats isInScope"
+              },
+              "text": {
+                "text": "Supabase Storage / Fotos"
+              },
+              ".element-text": {
+                "class": "element-text hasOpenThreats isInScope"
+              },
+              "body": {
+                "stroke": "#d0021b",
+                "strokeWidth": 2,
+                "strokeDasharray": null
+              }
+            },
+            "data": {
+              "name": "Supabase Storage / Fotos",
+              "type": "tm.Store",
+              "hasOpenThreats": true,
+              "outOfScope": false,
+              "description": "Foto- und Bild-Upload, ImagePicker, Supabase Storage-Limit und fehlende echte Dateisignatur-/Malware-/EXIF-Behandlung."
+            },
+            "shape": "tm.Store",
+            "zIndex": 7
+          },
+          {
+            "type": "tm.Process",
+            "size": {
+              "width": 290,
+              "height": 90
+            },
+            "position": {
+              "x": 1030,
+              "y": 410
+            },
+            "angle": 0,
+            "id": "7f92fcf7-ca2d-4fe3-959a-70673e7849f9",
+            "z": 8,
+            "hasOpenThreats": false,
+            "description": "Im Dokument genannte Sightengine-Moderation für offensive Inhalte; ausdrücklich kein Malware-Scanning und keine echte Dateityp-Signaturprüfung.",
+            "outOfScope": false,
+            "threats": [],
+            "attrs": {
+              ".element-shape": {
+                "class": "element-shape hasNoOpenThreats isInScope"
+              },
+              "text": {
+                "text": "Sightengine Moderation"
+              },
+              ".element-text": {
+                "class": "element-text hasNoOpenThreats isInScope"
+              },
+              "body": {
+                "stroke": "#333333",
+                "strokeWidth": 2,
+                "strokeDasharray": null
+              }
+            },
+            "data": {
+              "name": "Sightengine Moderation",
+              "type": "tm.Process",
+              "hasOpenThreats": false,
+              "outOfScope": false,
+              "description": "Im Dokument genannte Sightengine-Moderation für offensive Inhalte; ausdrücklich kein Malware-Scanning und keine echte Dateityp-Signaturprüfung."
+            },
+            "shape": "tm.Process",
+            "zIndex": 8
+          },
+          {
+            "type": "tm.Store",
+            "size": {
+              "width": 260,
+              "height": 100
+            },
+            "position": {
+              "x": 640,
+              "y": 450
+            },
+            "angle": 0,
+            "id": "af86f04d-3358-4cfa-a834-234e1b35a7ee",
+            "z": 9,
+            "hasOpenThreats": true,
+            "description": "Profile und Suchfunktion inklusive Suchlimit, Profil-Scraping-Risiko und SELECT-true-Policy für public/profiles.",
+            "outOfScope": false,
+            "threats": [
+              {
+                "threatId": "913d22f7-c750-444e-9769-61e6c0ed906b",
+                "number": 13,
+                "title": "Stalking / Profil-Scraping",
+                "type": "Information disclosure",
+                "modelType": "STRIDE",
+                "status": "Open",
+                "severity": "Medium",
+                "score": "Original-Risiko: Mittel | Original-Status: teilweise",
+                "description": "Gefahr: Profile werden systematisch ausgelesen.\nKategorie: Information Disclosure.\nRisiko: Mittel.\nStatus aus Dokument: teilweise.\nTechnische Belege: Suche limitiert Ergebnisse auf 20 (find-new-friends.tsx line 45), aber Profile sind per Suche abrufbar, ohne Rate-Limit oder Privacy-Einstellungen im Code. Die Policy Allow select all profiles erlaubt vollständigen Lesezugriff auf alle Profile (SELECT true für public).",
+                "mitigation": "Privacy-Einstellungen. Rate Limiting für Profilzugriffe.",
+                "ruleId": "0526e11a-73be-4e86-bfb2-21b79145926d",
+                "$$hashKey": "object:1013"
+              }
+            ],
+            "attrs": {
+              ".element-shape": {
+                "class": "element-shape hasOpenThreats isInScope"
+              },
+              "text": {
+                "text": "profiles / Suche"
+              },
+              ".element-text": {
+                "class": "element-text hasOpenThreats isInScope"
+              },
+              "body": {
+                "stroke": "#d0021b",
+                "strokeWidth": 2,
+                "strokeDasharray": null
+              }
+            },
+            "data": {
+              "name": "profiles / Suche",
+              "type": "tm.Store",
+              "hasOpenThreats": true,
+              "outOfScope": false,
+              "description": "Profile und Suchfunktion inklusive Suchlimit, Profil-Scraping-Risiko und SELECT-true-Policy für public/profiles."
+            },
+            "shape": "tm.Store",
+            "zIndex": 9
+          },
+          {
+            "type": "tm.Store",
+            "size": {
+              "width": 230,
+              "height": 100
+            },
+            "position": {
+              "x": 310,
+              "y": 450
+            },
+            "angle": 0,
+            "id": "a30b084c-a4e4-46e2-8e6b-2ee786ce7740",
+            "z": 10,
+            "hasOpenThreats": true,
+            "description": "Freundschaftsanfragen, direkte Inserts und Status accepted aus find-new-friends.tsx.",
+            "outOfScope": false,
+            "threats": [
+              {
+                "threatId": "011a29a6-d02c-4ed1-9713-ee8f6a3753d7",
+                "number": 10,
+                "title": "Spam durch Freundschaftsanfragen",
+                "type": "Denial of service",
+                "modelType": "STRIDE",
+                "status": "Open",
+                "severity": "Medium",
+                "score": "Original-Risiko: Niedrig bis Mittel | Original-Status: NICHT BEHOBEN",
+                "description": "Gefahr: System wird durch massenhafte Anfragen belastet.\nKategorie: Denial of Service.\nRisiko: Niedrig bis Mittel.\nStatus aus Dokument: NICHT BEHOBEN.\nTechnische Belege: friendships werden direkt inserted (find-new-friends.tsx line 75), Status sogar sofort \"accepted\" (find-new-friends.tsx line 80). Kein CAPTCHA, kein Zeitlimit, kein Request-/Accept-Flow erkennbar. Die RLS-Policy stellt nur sicher, dass requester_id = auth.uid() ist.",
+                "mitigation": "Limitierung von Anfragen pro Zeit. CAPTCHA einsetzen.",
+                "ruleId": "5883ef33-4dd8-4a89-b5ce-81309d2c607c",
+                "$$hashKey": "object:1010"
+              }
+            ],
+            "attrs": {
+              ".element-shape": {
+                "class": "element-shape hasOpenThreats isInScope"
+              },
+              "text": {
+                "text": "friendships"
+              },
+              ".element-text": {
+                "class": "element-text hasOpenThreats isInScope"
+              },
+              "body": {
+                "stroke": "#d0021b",
+                "strokeWidth": 2,
+                "strokeDasharray": null
+              }
+            },
+            "data": {
+              "name": "friendships",
+              "type": "tm.Store",
+              "hasOpenThreats": true,
+              "outOfScope": false,
+              "description": "Freundschaftsanfragen, direkte Inserts und Status accepted aus find-new-friends.tsx."
+            },
+            "shape": "tm.Store",
+            "zIndex": 10
+          },
+          {
+            "type": "tm.Store",
+            "size": {
+              "width": 230,
+              "height": 100
+            },
+            "position": {
+              "x": 310,
+              "y": 70
+            },
+            "angle": 0,
+            "id": "8f3b31c8-3a8f-47a9-96e1-456224076937",
+            "z": 11,
+            "hasOpenThreats": true,
+            "description": "Im Dokument als fehlend beschriebene Audit-Logs, unveränderbare Logs und beweissichere Aktionshistorie.",
+            "outOfScope": false,
+            "threats": [
+              {
+                "threatId": "c2584284-5ad0-4e82-b29e-95799de9ba75",
+                "number": 6,
+                "title": "Abstreiten von Aktionen",
+                "type": "Repudiation",
+                "modelType": "STRIDE",
+                "status": "Open",
+                "severity": "Medium",
+                "score": "Original-Risiko: Mittel – erschwert Nachvollziehbarkeit und Konfliktlösung. | Original-Status: NICHT BEHOBEN",
+                "description": "Gefahr: Ein Nutzer behauptet, bestimmte Aktionen, z. B. Erstellen/Teilen eines Outfits, nicht durchgeführt zu haben.\nKategorie: Repudiation.\nRisiko: Mittel – erschwert Nachvollziehbarkeit und Konfliktlösung.\nStatus aus Dokument: NICHT BEHOBEN.\nTechnische Belege: Keine Audit-Logs, keine unveränderbaren Logs, keine Trigger/Migrations im Repo. Normale created_at-Felder werden abgefragt, aber keine beweissichere Aktionshistorie.",
+                "mitigation": "Detaillierte Audit-Logs. Speicherung von Zeitstempeln und Benutzer-IDs. Unveränderbare Log-Strukturen.",
+                "ruleId": "ea3a209a-1449-452a-86ed-37341a941497",
+                "$$hashKey": "object:1006"
+              }
+            ],
+            "attrs": {
+              ".element-shape": {
+                "class": "element-shape hasOpenThreats isInScope"
+              },
+              "text": {
+                "text": "Audit-Logs / Aktionshistorie"
+              },
+              ".element-text": {
+                "class": "element-text hasOpenThreats isInScope"
+              },
+              "body": {
+                "stroke": "#d0021b",
+                "strokeWidth": 2,
+                "strokeDasharray": null
+              }
+            },
+            "data": {
+              "name": "Audit-Logs / Aktionshistorie",
+              "type": "tm.Store",
+              "hasOpenThreats": true,
+              "outOfScope": false,
+              "description": "Im Dokument als fehlend beschriebene Audit-Logs, unveränderbare Logs und beweissichere Aktionshistorie."
+            },
+            "shape": "tm.Store",
+            "zIndex": 11
+          },
+          {
+            "type": "tm.Flow",
+            "size": {
+              "width": 10,
+              "height": 10
+            },
+            "smooth": true,
+            "source": {
+              "cell": "3fdbc46e-1603-48f7-af48-f9eb307c96b8"
+            },
+            "target": {
+              "cell": "ec299c2e-c762-4180-a5bb-122d0377bcf9"
+            },
+            "vertices": [
+              {
+                "x": 260,
+                "y": 295
+              }
+            ],
+            "id": "67021ed2-4f9f-4301-a67d-41a05f303d3e",
+            "labels": [
+              {
+                "position": 0.5,
+                "attrs": {
+                  "text": {
+                    "text": "Nutzung der Outfeed-App",
+                    "font-weight": "400",
+                    "font-size": "small"
+                  }
+                }
+              }
+            ],
+            "z": 12,
+            "hasOpenThreats": false,
+            "description": "Outfeed-Nutzer verwendet die App zum Fotografieren, Organisieren, Planen und Zusammenstellen von Looks.",
+            "protocol": "Supabase/API",
+            "outOfScope": false,
+            "attrs": {
+              ".marker-target": {
+                "class": "marker-target hasNoOpenThreats isInScope"
+              },
+              ".connection": {
+                "class": "connection hasNoOpenThreats isInScope"
+              },
+              "line": {
+                "stroke": "#333333",
+                "strokeWidth": 2,
+                "targetMarker": {
+                  "name": "block"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "threats": [],
+            "data": {
+              "name": "Nutzung der Outfeed-App",
+              "type": "tm.Flow",
+              "description": "Outfeed-Nutzer verwendet die App zum Fotografieren, Organisieren, Planen und Zusammenstellen von Looks.",
+              "protocol": "Supabase/API",
+              "hasOpenThreats": false,
+              "outOfScope": false
+            },
+            "shape": "tm.Flow",
+            "zIndex": 12
+          },
+          {
+            "type": "tm.Flow",
+            "size": {
+              "width": 10,
+              "height": 10
+            },
+            "smooth": true,
+            "source": {
+              "cell": "9a36ab9b-aeee-4d10-9ba7-06142f9de002"
+            },
+            "target": {
+              "cell": "ec299c2e-c762-4180-a5bb-122d0377bcf9"
+            },
+            "vertices": [
+              {
+                "x": 260,
+                "y": 385
+              }
+            ],
+            "id": "7bd9188d-6f22-4652-b797-0ac54d978026",
+            "labels": [
+              {
+                "position": 0.5,
+                "attrs": {
+                  "text": {
+                    "text": "Interaktion / Angriffe",
+                    "font-weight": "400",
+                    "font-size": "small"
+                  }
+                }
+              }
+            ],
+            "z": 13,
+            "hasOpenThreats": false,
+            "description": "Freunde bzw. Angreifer lösen Profilzugriffe, Friendship-Requests, Bots, Login- oder Manipulationsversuche aus.",
+            "protocol": "Supabase/API",
+            "outOfScope": false,
+            "attrs": {
+              ".marker-target": {
+                "class": "marker-target hasNoOpenThreats isInScope"
+              },
+              ".connection": {
+                "class": "connection hasNoOpenThreats isInScope"
+              },
+              "line": {
+                "stroke": "#333333",
+                "strokeWidth": 2,
+                "targetMarker": {
+                  "name": "block"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "threats": [],
+            "data": {
+              "name": "Interaktion / Angriffe",
+              "type": "tm.Flow",
+              "description": "Freunde bzw. Angreifer lösen Profilzugriffe, Friendship-Requests, Bots, Login- oder Manipulationsversuche aus.",
+              "protocol": "Supabase/API",
+              "hasOpenThreats": false,
+              "outOfScope": false
+            },
+            "shape": "tm.Flow",
+            "zIndex": 13
+          },
+          {
+            "type": "tm.Flow",
+            "size": {
+              "width": 10,
+              "height": 10
+            },
+            "smooth": true,
+            "source": {
+              "cell": "ec299c2e-c762-4180-a5bb-122d0377bcf9"
+            },
+            "target": {
+              "cell": "a6ff2c7b-3c55-4f17-b8b2-80e8346c7f27"
+            },
+            "vertices": [
+              {
+                "x": 590,
+                "y": 210
+              }
+            ],
+            "id": "659bdb69-e655-4a81-8b07-7bd0ae093318",
+            "labels": [
+              {
+                "position": 0.5,
+                "attrs": {
+                  "text": {
+                    "text": "signUp / signIn",
+                    "font-weight": "400",
+                    "font-size": "small"
+                  }
+                }
+              }
+            ],
+            "z": 14,
+            "hasOpenThreats": false,
+            "description": "Registrierung und Login über Supabase Auth; betrifft Credential Stuffing, Bots, MFA und E-Mail-Confirmation.",
+            "protocol": "Supabase/API",
+            "outOfScope": false,
+            "attrs": {
+              ".marker-target": {
+                "class": "marker-target hasNoOpenThreats isInScope"
+              },
+              ".connection": {
+                "class": "connection hasNoOpenThreats isInScope"
+              },
+              "line": {
+                "stroke": "#333333",
+                "strokeWidth": 2,
+                "targetMarker": {
+                  "name": "block"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "threats": [],
+            "data": {
+              "name": "signUp / signIn",
+              "type": "tm.Flow",
+              "description": "Registrierung und Login über Supabase Auth; betrifft Credential Stuffing, Bots, MFA und E-Mail-Confirmation.",
+              "protocol": "Supabase/API",
+              "hasOpenThreats": false,
+              "outOfScope": false
+            },
+            "shape": "tm.Flow",
+            "zIndex": 14
+          },
+          {
+            "type": "tm.Flow",
+            "size": {
+              "width": 10,
+              "height": 10
+            },
+            "smooth": true,
+            "source": {
+              "cell": "ec299c2e-c762-4180-a5bb-122d0377bcf9"
+            },
+            "target": {
+              "cell": "574f50e7-d238-4d82-bff0-b203d4270b51"
+            },
+            "vertices": [
+              {
+                "x": 590,
+                "y": 302
+              }
+            ],
+            "id": "2b73ef6e-4b83-4503-a9c8-5cf9ba12e2ff",
+            "labels": [
+              {
+                "position": 0.5,
+                "attrs": {
+                  "text": {
+                    "text": "Supabase API-Requests",
+                    "font-weight": "400",
+                    "font-size": "small"
+                  }
+                }
+              }
+            ],
+            "z": 15,
+            "hasOpenThreats": false,
+            "description": "Clientseitige Requests an Supabase API/RLS, inklusive owner_id-Filter und direkter Manipulierbarkeit von API-Requests.",
+            "protocol": "Supabase/API",
+            "outOfScope": false,
+            "attrs": {
+              ".marker-target": {
+                "class": "marker-target hasNoOpenThreats isInScope"
+              },
+              ".connection": {
+                "class": "connection hasNoOpenThreats isInScope"
+              },
+              "line": {
+                "stroke": "#333333",
+                "strokeWidth": 2,
+                "targetMarker": {
+                  "name": "block"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "threats": [],
+            "data": {
+              "name": "Supabase API-Requests",
+              "type": "tm.Flow",
+              "description": "Clientseitige Requests an Supabase API/RLS, inklusive owner_id-Filter und direkter Manipulierbarkeit von API-Requests.",
+              "protocol": "Supabase/API",
+              "hasOpenThreats": false,
+              "outOfScope": false
+            },
+            "shape": "tm.Flow",
+            "zIndex": 15
+          },
+          {
+            "type": "tm.Flow",
+            "size": {
+              "width": 10,
+              "height": 10
+            },
+            "smooth": true,
+            "source": {
+              "cell": "574f50e7-d238-4d82-bff0-b203d4270b51"
+            },
+            "target": {
+              "cell": "79d9ead8-c06e-468d-94cb-26c8d2497236"
+            },
+            "vertices": [
+              {
+                "x": 965,
+                "y": 218
+              }
+            ],
+            "id": "11f1444e-f1cb-4f50-a412-2366aa88bf80",
+            "labels": [
+              {
+                "position": 0.5,
+                "attrs": {
+                  "text": {
+                    "text": "SELECT / INSERT / UPDATE / DELETE",
+                    "font-weight": "400",
+                    "font-size": "small"
+                  }
+                }
+              }
+            ],
+            "z": 16,
+            "hasOpenThreats": false,
+            "description": "Datenzugriffe auf Kleidung, Outfits und outfit_items inklusive Visibility- und Ownership-Risiken.",
+            "protocol": "Supabase/API",
+            "outOfScope": false,
+            "attrs": {
+              ".marker-target": {
+                "class": "marker-target hasNoOpenThreats isInScope"
+              },
+              ".connection": {
+                "class": "connection hasNoOpenThreats isInScope"
+              },
+              "line": {
+                "stroke": "#333333",
+                "strokeWidth": 2,
+                "targetMarker": {
+                  "name": "block"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "threats": [],
+            "data": {
+              "name": "SELECT / INSERT / UPDATE / DELETE",
+              "type": "tm.Flow",
+              "description": "Datenzugriffe auf Kleidung, Outfits und outfit_items inklusive Visibility- und Ownership-Risiken.",
+              "protocol": "Supabase/API",
+              "hasOpenThreats": false,
+              "outOfScope": false
+            },
+            "shape": "tm.Flow",
+            "zIndex": 16
+          },
+          {
+            "type": "tm.Flow",
+            "size": {
+              "width": 10,
+              "height": 10
+            },
+            "smooth": true,
+            "source": {
+              "cell": "ec299c2e-c762-4180-a5bb-122d0377bcf9"
+            },
+            "target": {
+              "cell": "972bea02-0f05-411d-83f8-0e6a897d6275"
+            },
+            "vertices": [
+              {
+                "x": 785,
+                "y": 302
+              }
+            ],
+            "id": "80d669bf-202b-4d6a-a3cb-253ff2ca9584",
+            "labels": [
+              {
+                "position": 0.5,
+                "attrs": {
+                  "text": {
+                    "text": "Bild-Upload / Fotoauswahl",
+                    "font-weight": "400",
+                    "font-size": "small"
+                  }
+                }
+              }
+            ],
+            "z": 17,
+            "hasOpenThreats": false,
+            "description": "Bildauswahl und Upload über ImagePicker/useImageUpload sowie Supabase Storage.",
+            "protocol": "Supabase/API",
+            "outOfScope": false,
+            "attrs": {
+              ".marker-target": {
+                "class": "marker-target hasNoOpenThreats isInScope"
+              },
+              ".connection": {
+                "class": "connection hasNoOpenThreats isInScope"
+              },
+              "line": {
+                "stroke": "#333333",
+                "strokeWidth": 2,
+                "targetMarker": {
+                  "name": "block"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "threats": [],
+            "data": {
+              "name": "Bild-Upload / Fotoauswahl",
+              "type": "tm.Flow",
+              "description": "Bildauswahl und Upload über ImagePicker/useImageUpload sowie Supabase Storage.",
+              "protocol": "Supabase/API",
+              "hasOpenThreats": false,
+              "outOfScope": false
+            },
+            "shape": "tm.Flow",
+            "zIndex": 17
+          },
+          {
+            "type": "tm.Flow",
+            "size": {
+              "width": 10,
+              "height": 10
+            },
+            "smooth": true,
+            "source": {
+              "cell": "972bea02-0f05-411d-83f8-0e6a897d6275"
+            },
+            "target": {
+              "cell": "7f92fcf7-ca2d-4fe3-959a-70673e7849f9"
+            },
+            "vertices": [
+              {
+                "x": 1175,
+                "y": 380
+              }
+            ],
+            "id": "8aeaee5d-4337-4bee-bcc8-7c08ce880e82",
+            "labels": [
+              {
+                "position": 0.5,
+                "attrs": {
+                  "text": {
+                    "text": "Bildmoderation",
+                    "font-weight": "400",
+                    "font-size": "small"
+                  }
+                }
+              }
+            ],
+            "z": 18,
+            "hasOpenThreats": false,
+            "description": "Sightengine-Moderation für offensive Inhalte; laut Dokument kein Malware-Scanning.",
+            "protocol": "Supabase/API",
+            "outOfScope": false,
+            "attrs": {
+              ".marker-target": {
+                "class": "marker-target hasNoOpenThreats isInScope"
+              },
+              ".connection": {
+                "class": "connection hasNoOpenThreats isInScope"
+              },
+              "line": {
+                "stroke": "#333333",
+                "strokeWidth": 2,
+                "targetMarker": {
+                  "name": "block"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "threats": [],
+            "data": {
+              "name": "Bildmoderation",
+              "type": "tm.Flow",
+              "description": "Sightengine-Moderation für offensive Inhalte; laut Dokument kein Malware-Scanning.",
+              "protocol": "Supabase/API",
+              "hasOpenThreats": false,
+              "outOfScope": false
+            },
+            "shape": "tm.Flow",
+            "zIndex": 18
+          },
+          {
+            "type": "tm.Flow",
+            "size": {
+              "width": 10,
+              "height": 10
+            },
+            "smooth": true,
+            "source": {
+              "cell": "574f50e7-d238-4d82-bff0-b203d4270b51"
+            },
+            "target": {
+              "cell": "af86f04d-3358-4cfa-a834-234e1b35a7ee"
+            },
+            "vertices": [
+              {
+                "x": 770,
+                "y": 402
+              }
+            ],
+            "id": "35f82e69-ce8c-4362-ad7c-93584569332e",
+            "labels": [
+              {
+                "position": 0.5,
+                "attrs": {
+                  "text": {
+                    "text": "Profil- und Such-Requests",
+                    "font-weight": "400",
+                    "font-size": "small"
+                  }
+                }
+              }
+            ],
+            "z": 19,
+            "hasOpenThreats": false,
+            "description": "Profilzugriffe und Suche; betrifft Profil-Scraping und offene Profile-Policy.",
+            "protocol": "Supabase/API",
+            "outOfScope": false,
+            "attrs": {
+              ".marker-target": {
+                "class": "marker-target hasNoOpenThreats isInScope"
+              },
+              ".connection": {
+                "class": "connection hasNoOpenThreats isInScope"
+              },
+              "line": {
+                "stroke": "#333333",
+                "strokeWidth": 2,
+                "targetMarker": {
+                  "name": "block"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "threats": [],
+            "data": {
+              "name": "Profil- und Such-Requests",
+              "type": "tm.Flow",
+              "description": "Profilzugriffe und Suche; betrifft Profil-Scraping und offene Profile-Policy.",
+              "protocol": "Supabase/API",
+              "hasOpenThreats": false,
+              "outOfScope": false
+            },
+            "shape": "tm.Flow",
+            "zIndex": 19
+          },
+          {
+            "type": "tm.Flow",
+            "size": {
+              "width": 10,
+              "height": 10
+            },
+            "smooth": true,
+            "source": {
+              "cell": "574f50e7-d238-4d82-bff0-b203d4270b51"
+            },
+            "target": {
+              "cell": "a30b084c-a4e4-46e2-8e6b-2ee786ce7740"
+            },
+            "vertices": [
+              {
+                "x": 590,
+                "y": 402
+              }
+            ],
+            "id": "b9bbb05f-4b8a-4a1e-b691-06be112edf75",
+            "labels": [
+              {
+                "position": 0.5,
+                "attrs": {
+                  "text": {
+                    "text": "Friendship Inserts",
+                    "font-weight": "400",
+                    "font-size": "small"
+                  }
+                }
+              }
+            ],
+            "z": 20,
+            "hasOpenThreats": false,
+            "description": "Direkte Inserts in friendships und Status accepted.",
+            "protocol": "Supabase/API",
+            "outOfScope": false,
+            "attrs": {
+              ".marker-target": {
+                "class": "marker-target hasNoOpenThreats isInScope"
+              },
+              ".connection": {
+                "class": "connection hasNoOpenThreats isInScope"
+              },
+              "line": {
+                "stroke": "#333333",
+                "strokeWidth": 2,
+                "targetMarker": {
+                  "name": "block"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "threats": [],
+            "data": {
+              "name": "Friendship Inserts",
+              "type": "tm.Flow",
+              "description": "Direkte Inserts in friendships und Status accepted.",
+              "protocol": "Supabase/API",
+              "hasOpenThreats": false,
+              "outOfScope": false
+            },
+            "shape": "tm.Flow",
+            "zIndex": 20
+          },
+          {
+            "type": "tm.Flow",
+            "size": {
+              "width": 10,
+              "height": 10
+            },
+            "smooth": true,
+            "source": {
+              "cell": "574f50e7-d238-4d82-bff0-b203d4270b51"
+            },
+            "target": {
+              "cell": "8f3b31c8-3a8f-47a9-96e1-456224076937"
+            },
+            "vertices": [
+              {
+                "x": 590,
+                "y": 212
+              }
+            ],
+            "id": "788d3241-8ad4-425c-a290-c55a86112fef",
+            "labels": [
+              {
+                "position": 0.5,
+                "attrs": {
+                  "text": {
+                    "text": "fehlende Aktionshistorie",
+                    "font-weight": "400",
+                    "font-size": "small"
+                  }
+                }
+              }
+            ],
+            "z": 21,
+            "hasOpenThreats": false,
+            "description": "Fehlende Audit-Logs/Trigger/Migrations; normale created_at-Felder reichen nicht als beweissichere Historie.",
+            "protocol": "Supabase/API",
+            "outOfScope": false,
+            "attrs": {
+              ".marker-target": {
+                "class": "marker-target hasNoOpenThreats isInScope"
+              },
+              ".connection": {
+                "class": "connection hasNoOpenThreats isInScope"
+              },
+              "line": {
+                "stroke": "#333333",
+                "strokeWidth": 2,
+                "targetMarker": {
+                  "name": "block"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "threats": [],
+            "data": {
+              "name": "fehlende Aktionshistorie",
+              "type": "tm.Flow",
+              "description": "Fehlende Audit-Logs/Trigger/Migrations; normale created_at-Felder reichen nicht als beweissichere Historie.",
+              "protocol": "Supabase/API",
+              "hasOpenThreats": false,
+              "outOfScope": false
+            },
+            "shape": "tm.Flow",
+            "zIndex": 21
+          }
+        ],
         "diagramJson": {
           "cells": [
             {
@@ -44,6 +1392,11 @@
                 },
                 ".element-text": {
                   "class": "element-text hasNoOpenThreats isInScope"
+                },
+                "body": {
+                  "stroke": "#333333",
+                  "strokeWidth": 2,
+                  "strokeDasharray": null
                 }
               },
               "data": {
@@ -52,7 +1405,9 @@
                 "hasOpenThreats": false,
                 "outOfScope": false,
                 "description": "Person, die Outfeed verwendet: Kleiderschrank digitalisieren, Outfits planen, Looks zusammenstellen, Kleidung fotografieren/organisieren, Meinungen von Freunden einholen und Doppelkäufe vermeiden."
-              }
+              },
+              "shape": "tm.Actor",
+              "zIndex": 1
             },
             {
               "type": "tm.Actor",
@@ -80,6 +1435,11 @@
                 },
                 ".element-text": {
                   "class": "element-text hasNoOpenThreats isInScope"
+                },
+                "body": {
+                  "stroke": "#333333",
+                  "strokeWidth": 2,
+                  "strokeDasharray": null
                 }
               },
               "data": {
@@ -88,7 +1448,9 @@
                 "hasOpenThreats": false,
                 "outOfScope": false,
                 "description": "Im Dokument genannte externe Rolle: Freundschaftsanfragen, Profilzugriffe, Credential Stuffing, Bots, direkte/API-nahe Angriffe und Manipulationsversuche."
-              }
+              },
+              "shape": "tm.Actor",
+              "zIndex": 2
             },
             {
               "type": "tm.Process",
@@ -145,6 +1507,11 @@
                 },
                 ".element-text": {
                   "class": "element-text hasOpenThreats isInScope"
+                },
+                "body": {
+                  "stroke": "#d0021b",
+                  "strokeWidth": 2,
+                  "strokeDasharray": null
                 }
               },
               "data": {
@@ -153,7 +1520,9 @@
                 "hasOpenThreats": true,
                 "outOfScope": false,
                 "description": "Clientseitige Outfeed-Logik aus den genannten Dateien wie register.tsx, edit.tsx, details/[id].tsx, useImageUpload.ts, set-outfeed-details.tsx, create-outfeed.tsx und app.json."
-              }
+              },
+              "shape": "tm.Process",
+              "zIndex": 3
             },
             {
               "type": "tm.Process",
@@ -210,6 +1579,11 @@
                 },
                 ".element-text": {
                   "class": "element-text hasOpenThreats isInScope"
+                },
+                "body": {
+                  "stroke": "#d0021b",
+                  "strokeWidth": 2,
+                  "strokeDasharray": null
                 }
               },
               "data": {
@@ -218,7 +1592,9 @@
                 "hasOpenThreats": true,
                 "outOfScope": false,
                 "description": "Supabase Auth mit PKCE im Client, Auth-Rate-Limit, deaktivierter MFA und deaktivierten E-Mail-Confirmations."
-              }
+              },
+              "shape": "tm.Process",
+              "zIndex": 4
             },
             {
               "type": "tm.Process",
@@ -289,6 +1665,11 @@
                 },
                 ".element-text": {
                   "class": "element-text hasOpenThreats isInScope"
+                },
+                "body": {
+                  "stroke": "#d0021b",
+                  "strokeWidth": 2,
+                  "strokeDasharray": null
                 }
               },
               "data": {
@@ -297,7 +1678,9 @@
                 "hasOpenThreats": true,
                 "outOfScope": false,
                 "description": "Direkte API-Requests und serverseitige Zugriffskontrolle/RLS-Policies; im Dokument als zentrale Schwachstelle beschrieben."
-              }
+              },
+              "shape": "tm.Process",
+              "zIndex": 5
             },
             {
               "type": "tm.Store",
@@ -354,6 +1737,11 @@
                 },
                 ".element-text": {
                   "class": "element-text hasOpenThreats isInScope"
+                },
+                "body": {
+                  "stroke": "#d0021b",
+                  "strokeWidth": 2,
+                  "strokeDasharray": null
                 }
               },
               "data": {
@@ -362,7 +1750,9 @@
                 "hasOpenThreats": true,
                 "outOfScope": false,
                 "description": "Datenbereiche für Kleidung, Outfits und outfit_items inklusive Tabellen wardrobe_items, outfits und Visibility-/Ownership-Logik."
-              }
+              },
+              "shape": "tm.Store",
+              "zIndex": 6
             },
             {
               "type": "tm.Store",
@@ -433,6 +1823,11 @@
                 },
                 ".element-text": {
                   "class": "element-text hasOpenThreats isInScope"
+                },
+                "body": {
+                  "stroke": "#d0021b",
+                  "strokeWidth": 2,
+                  "strokeDasharray": null
                 }
               },
               "data": {
@@ -441,7 +1836,9 @@
                 "hasOpenThreats": true,
                 "outOfScope": false,
                 "description": "Foto- und Bild-Upload, ImagePicker, Supabase Storage-Limit und fehlende echte Dateisignatur-/Malware-/EXIF-Behandlung."
-              }
+              },
+              "shape": "tm.Store",
+              "zIndex": 7
             },
             {
               "type": "tm.Process",
@@ -469,6 +1866,11 @@
                 },
                 ".element-text": {
                   "class": "element-text hasNoOpenThreats isInScope"
+                },
+                "body": {
+                  "stroke": "#333333",
+                  "strokeWidth": 2,
+                  "strokeDasharray": null
                 }
               },
               "data": {
@@ -477,7 +1879,9 @@
                 "hasOpenThreats": false,
                 "outOfScope": false,
                 "description": "Im Dokument genannte Sightengine-Moderation für offensive Inhalte; ausdrücklich kein Malware-Scanning und keine echte Dateityp-Signaturprüfung."
-              }
+              },
+              "shape": "tm.Process",
+              "zIndex": 8
             },
             {
               "type": "tm.Store",
@@ -520,6 +1924,11 @@
                 },
                 ".element-text": {
                   "class": "element-text hasOpenThreats isInScope"
+                },
+                "body": {
+                  "stroke": "#d0021b",
+                  "strokeWidth": 2,
+                  "strokeDasharray": null
                 }
               },
               "data": {
@@ -528,7 +1937,9 @@
                 "hasOpenThreats": true,
                 "outOfScope": false,
                 "description": "Profile und Suchfunktion inklusive Suchlimit, Profil-Scraping-Risiko und SELECT-true-Policy für public/profiles."
-              }
+              },
+              "shape": "tm.Store",
+              "zIndex": 9
             },
             {
               "type": "tm.Store",
@@ -571,6 +1982,11 @@
                 },
                 ".element-text": {
                   "class": "element-text hasOpenThreats isInScope"
+                },
+                "body": {
+                  "stroke": "#d0021b",
+                  "strokeWidth": 2,
+                  "strokeDasharray": null
                 }
               },
               "data": {
@@ -579,7 +1995,9 @@
                 "hasOpenThreats": true,
                 "outOfScope": false,
                 "description": "Freundschaftsanfragen, direkte Inserts und Status accepted aus find-new-friends.tsx."
-              }
+              },
+              "shape": "tm.Store",
+              "zIndex": 10
             },
             {
               "type": "tm.Store",
@@ -622,6 +2040,11 @@
                 },
                 ".element-text": {
                   "class": "element-text hasOpenThreats isInScope"
+                },
+                "body": {
+                  "stroke": "#d0021b",
+                  "strokeWidth": 2,
+                  "strokeDasharray": null
                 }
               },
               "data": {
@@ -630,7 +2053,9 @@
                 "hasOpenThreats": true,
                 "outOfScope": false,
                 "description": "Im Dokument als fehlend beschriebene Audit-Logs, unveränderbare Logs und beweissichere Aktionshistorie."
-              }
+              },
+              "shape": "tm.Store",
+              "zIndex": 11
             },
             {
               "type": "tm.Flow",
@@ -675,6 +2100,14 @@
                 },
                 ".connection": {
                   "class": "connection hasNoOpenThreats isInScope"
+                },
+                "line": {
+                  "stroke": "#333333",
+                  "strokeWidth": 2,
+                  "targetMarker": {
+                    "name": "block"
+                  },
+                  "strokeDasharray": null
                 }
               },
               "threats": [],
@@ -685,7 +2118,9 @@
                 "protocol": "Supabase/API",
                 "hasOpenThreats": false,
                 "outOfScope": false
-              }
+              },
+              "shape": "tm.Flow",
+              "zIndex": 12
             },
             {
               "type": "tm.Flow",
@@ -730,6 +2165,14 @@
                 },
                 ".connection": {
                   "class": "connection hasNoOpenThreats isInScope"
+                },
+                "line": {
+                  "stroke": "#333333",
+                  "strokeWidth": 2,
+                  "targetMarker": {
+                    "name": "block"
+                  },
+                  "strokeDasharray": null
                 }
               },
               "threats": [],
@@ -740,7 +2183,9 @@
                 "protocol": "Supabase/API",
                 "hasOpenThreats": false,
                 "outOfScope": false
-              }
+              },
+              "shape": "tm.Flow",
+              "zIndex": 13
             },
             {
               "type": "tm.Flow",
@@ -785,6 +2230,14 @@
                 },
                 ".connection": {
                   "class": "connection hasNoOpenThreats isInScope"
+                },
+                "line": {
+                  "stroke": "#333333",
+                  "strokeWidth": 2,
+                  "targetMarker": {
+                    "name": "block"
+                  },
+                  "strokeDasharray": null
                 }
               },
               "threats": [],
@@ -795,7 +2248,9 @@
                 "protocol": "Supabase/API",
                 "hasOpenThreats": false,
                 "outOfScope": false
-              }
+              },
+              "shape": "tm.Flow",
+              "zIndex": 14
             },
             {
               "type": "tm.Flow",
@@ -840,6 +2295,14 @@
                 },
                 ".connection": {
                   "class": "connection hasNoOpenThreats isInScope"
+                },
+                "line": {
+                  "stroke": "#333333",
+                  "strokeWidth": 2,
+                  "targetMarker": {
+                    "name": "block"
+                  },
+                  "strokeDasharray": null
                 }
               },
               "threats": [],
@@ -850,7 +2313,9 @@
                 "protocol": "Supabase/API",
                 "hasOpenThreats": false,
                 "outOfScope": false
-              }
+              },
+              "shape": "tm.Flow",
+              "zIndex": 15
             },
             {
               "type": "tm.Flow",
@@ -895,6 +2360,14 @@
                 },
                 ".connection": {
                   "class": "connection hasNoOpenThreats isInScope"
+                },
+                "line": {
+                  "stroke": "#333333",
+                  "strokeWidth": 2,
+                  "targetMarker": {
+                    "name": "block"
+                  },
+                  "strokeDasharray": null
                 }
               },
               "threats": [],
@@ -905,7 +2378,9 @@
                 "protocol": "Supabase/API",
                 "hasOpenThreats": false,
                 "outOfScope": false
-              }
+              },
+              "shape": "tm.Flow",
+              "zIndex": 16
             },
             {
               "type": "tm.Flow",
@@ -950,6 +2425,14 @@
                 },
                 ".connection": {
                   "class": "connection hasNoOpenThreats isInScope"
+                },
+                "line": {
+                  "stroke": "#333333",
+                  "strokeWidth": 2,
+                  "targetMarker": {
+                    "name": "block"
+                  },
+                  "strokeDasharray": null
                 }
               },
               "threats": [],
@@ -960,7 +2443,9 @@
                 "protocol": "Supabase/API",
                 "hasOpenThreats": false,
                 "outOfScope": false
-              }
+              },
+              "shape": "tm.Flow",
+              "zIndex": 17
             },
             {
               "type": "tm.Flow",
@@ -1005,6 +2490,14 @@
                 },
                 ".connection": {
                   "class": "connection hasNoOpenThreats isInScope"
+                },
+                "line": {
+                  "stroke": "#333333",
+                  "strokeWidth": 2,
+                  "targetMarker": {
+                    "name": "block"
+                  },
+                  "strokeDasharray": null
                 }
               },
               "threats": [],
@@ -1015,7 +2508,9 @@
                 "protocol": "Supabase/API",
                 "hasOpenThreats": false,
                 "outOfScope": false
-              }
+              },
+              "shape": "tm.Flow",
+              "zIndex": 18
             },
             {
               "type": "tm.Flow",
@@ -1060,6 +2555,14 @@
                 },
                 ".connection": {
                   "class": "connection hasNoOpenThreats isInScope"
+                },
+                "line": {
+                  "stroke": "#333333",
+                  "strokeWidth": 2,
+                  "targetMarker": {
+                    "name": "block"
+                  },
+                  "strokeDasharray": null
                 }
               },
               "threats": [],
@@ -1070,7 +2573,9 @@
                 "protocol": "Supabase/API",
                 "hasOpenThreats": false,
                 "outOfScope": false
-              }
+              },
+              "shape": "tm.Flow",
+              "zIndex": 19
             },
             {
               "type": "tm.Flow",
@@ -1115,6 +2620,14 @@
                 },
                 ".connection": {
                   "class": "connection hasNoOpenThreats isInScope"
+                },
+                "line": {
+                  "stroke": "#333333",
+                  "strokeWidth": 2,
+                  "targetMarker": {
+                    "name": "block"
+                  },
+                  "strokeDasharray": null
                 }
               },
               "threats": [],
@@ -1125,7 +2638,9 @@
                 "protocol": "Supabase/API",
                 "hasOpenThreats": false,
                 "outOfScope": false
-              }
+              },
+              "shape": "tm.Flow",
+              "zIndex": 20
             },
             {
               "type": "tm.Flow",
@@ -1170,6 +2685,14 @@
                 },
                 ".connection": {
                   "class": "connection hasNoOpenThreats isInScope"
+                },
+                "line": {
+                  "stroke": "#333333",
+                  "strokeWidth": 2,
+                  "targetMarker": {
+                    "name": "block"
+                  },
+                  "strokeDasharray": null
                 }
               },
               "threats": [],
@@ -1180,7 +2703,9 @@
                 "protocol": "Supabase/API",
                 "hasOpenThreats": false,
                 "outOfScope": false
-              }
+              },
+              "shape": "tm.Flow",
+              "zIndex": 21
             }
           ]
         },
@@ -1190,6 +2715,8 @@
         }
       }
     ],
-    "reviewer": ""
+    "diagramTop": 1,
+    "reviewer": "",
+    "threatTop": 15
   }
 }
