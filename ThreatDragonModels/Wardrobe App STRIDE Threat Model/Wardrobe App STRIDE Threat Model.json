@@ -1,0 +1,517 @@
+{
+  "version": "2.6.1",
+  "summary": {
+    "id": "bb4879d2-09da-4032-b987-0c27d7e14546",
+    "title": "Wardrobe App STRIDE Threat Model",
+    "owner": "Nicht angegeben",
+    "description": "Threat-Dragon-Modell aus dem Dokument „Threat Modeling mit STRIDE“. Es wurden alle 15 im Dokument beschriebenen Threats übernommen. Es wurden keine zusätzlichen Threats ergänzt und keine vollständigen Datenflüsse erfunden; die Diagrammelemente bilden nur die im Dokument genannten Systembereiche, Tabellen und Prozesse ab."
+  },
+  "detail": {
+    "contributors": [
+      {
+        "name": "Aus stride-threats.docx übernommen"
+      }
+    ],
+    "reviewer": "",
+    "diagramTop": 1,
+    "threatTop": 15,
+    "diagrams": [
+      {
+        "id": 0,
+        "version": "2.6.1",
+        "title": "STRIDE Findings aus stride-threats.docx",
+        "description": "STRIDE-Diagramm mit allen Threats aus dem bereitgestellten Dokument. Keine zusätzlichen Threats; keine erfundene Vollarchitektur.",
+        "diagramType": "STRIDE",
+        "placeholder": "STRIDE Findings",
+        "thumbnail": "./public/content/images/thumbnail.stride.jpg",
+        "cells": [
+          {
+            "id": "532fde98-f0a6-4825-a3e1-b2314826fe75",
+            "shape": "tm.Process",
+            "type": "tm.Process",
+            "zIndex": 1,
+            "z": 1,
+            "position": {
+              "x": 80,
+              "y": 80
+            },
+            "size": {
+              "width": 260,
+              "height": 100
+            },
+            "attrs": {
+              "body": {
+                "stroke": "#d0021b",
+                "strokeWidth": 2,
+                "strokeDasharray": null
+              },
+              "text": {
+                "text": "Auth & Registrierung"
+              },
+              ".element-shape": {
+                "class": "element-shape hasOpenThreats isInScope"
+              },
+              ".element-text": {
+                "class": "element-text hasOpenThreats isInScope"
+              }
+            },
+            "data": {
+              "name": "Auth & Registrierung",
+              "type": "tm.Process",
+              "hasOpenThreats": true,
+              "description": "Supabase Auth, Registrierung, Login und Account-Erstellung aus dem STRIDE-Dokument.",
+              "outOfScope": false
+            },
+            "hasOpenThreats": true,
+            "description": "Supabase Auth, Registrierung, Login und Account-Erstellung aus dem STRIDE-Dokument.",
+            "outOfScope": false,
+            "threats": [
+              {
+                "threatId": "084c9088-9e74-4b7b-a2ad-9ac95a1fe492",
+                "number": 1,
+                "title": "Account-Übernahme (Credential Stuffing)",
+                "type": "Spoofing",
+                "modelType": "STRIDE",
+                "status": "Open",
+                "severity": "High",
+                "score": "Original-Risiko: Hoch – da vollständiger Zugriff auf Benutzerkonto und private Daten möglich ist. | Original-Status: teilweise",
+                "description": "Gefahr: Angreifer nutzen geleakte Zugangsdaten aus anderen Plattformen, um sich automatisiert in Benutzerkonten einzuloggen.\nKategorie: Spoofing.\nRisiko: Hoch – da vollständiger Zugriff auf Benutzerkonto und private Daten möglich ist.\nStatus aus Dokument: teilweise.\nTechnische Belege: Supabase Auth nutzt PKCE im Client (lib/supabase.ts line 7) und Supabase rate-limitiert Sign-in/Sign-up auf 30 Requests/5 min (supabase/config.toml line 200). MFA ist deaktiviert (supabase/config.toml line 295), E-Mail-Confirmations sind aus (supabase/config.toml line 219), keine ungewöhnliche Login-Erkennung im Code gefunden.",
+                "mitigation": "Implementierung von Multi-Faktor-Authentifizierung (MFA / 2FA). Rate Limiting und Schutz gegen Brute-Force-Angriffe. Überwachung ungewöhnlicher Login-Aktivitäten."
+              },
+              {
+                "threatId": "56725d5d-77d1-46bf-bcec-c0f66d5ef9c9",
+                "number": 2,
+                "title": "Fake Accounts / Bots",
+                "type": "Spoofing",
+                "modelType": "STRIDE",
+                "status": "Open",
+                "severity": "Medium",
+                "score": "Original-Risiko: Mittel – kann Plattformvertrauen und Sicherheit beeinträchtigen. | Original-Status: NICHT BEHOBEN",
+                "description": "Gefahr: Automatisierte oder gefälschte Accounts werden erstellt, um Spam oder Social Engineering durchzuführen.\nKategorie: Spoofing.\nRisiko: Mittel – kann Plattformvertrauen und Sicherheit beeinträchtigen.\nStatus aus Dokument: NICHT BEHOBEN.\nTechnische Belege: Registrierung läuft direkt über supabase.auth.signUp (register.tsx line 149). CAPTCHA ist nur auskommentiert (supabase/config.toml line 207), E-Mail-Verifikation ist deaktiviert. Username-Validierung prüft nur Länge, keine Bot-Abwehr (constants/username.ts line 6).",
+                "mitigation": "CAPTCHA bei Registrierung. E-Mail-Verifikation. Erkennung ungewöhnlicher Account-Aktivitäten."
+              }
+            ]
+          },
+          {
+            "id": "b3e13cfc-5cf8-4057-aac8-8add2286a567",
+            "shape": "tm.Process",
+            "type": "tm.Process",
+            "zIndex": 2,
+            "z": 2,
+            "position": {
+              "x": 390,
+              "y": 80
+            },
+            "size": {
+              "width": 300,
+              "height": 100
+            },
+            "attrs": {
+              "body": {
+                "stroke": "#d0021b",
+                "strokeWidth": 2,
+                "strokeDasharray": null
+              },
+              "text": {
+                "text": "API-Requests & RLS-Policies"
+              },
+              ".element-shape": {
+                "class": "element-shape hasOpenThreats isInScope"
+              },
+              ".element-text": {
+                "class": "element-text hasOpenThreats isInScope"
+              }
+            },
+            "data": {
+              "name": "API-Requests & RLS-Policies",
+              "type": "tm.Process",
+              "hasOpenThreats": true,
+              "description": "Direkte API-Requests, serverseitige Validierung, Autorisierung und RLS-Policies aus dem STRIDE-Dokument.",
+              "outOfScope": false
+            },
+            "hasOpenThreats": true,
+            "description": "Direkte API-Requests, serverseitige Validierung, Autorisierung und RLS-Policies aus dem STRIDE-Dokument.",
+            "outOfScope": false,
+            "threats": [
+              {
+                "threatId": "14f5e6e1-258d-443f-92ab-e60b19a3f658",
+                "number": 3,
+                "title": "Manipulation von API-Requests",
+                "type": "Tampering",
+                "modelType": "STRIDE",
+                "status": "Open",
+                "severity": "High",
+                "score": "Original-Risiko: Hoch – kann zu ungewollter Veröffentlichung privater Daten führen. | Original-Status: nicht behoben/kritisch",
+                "description": "Gefahr: Ein Angreifer verändert API-Anfragen, z. B. Sichtbarkeit von Kleidung auf „public“ setzen.\nKategorie: Tampering.\nRisiko: Hoch – kann zu ungewollter Veröffentlichung privater Daten führen.\nStatus aus Dokument: nicht behoben/kritisch.\nTechnische Belege: Clientseitig werden teilweise Ownership-Prüfungen durchgeführt, z. B. owner_id setzen und Filter mit .eq(\"owner_id\", user.id), diese sind jedoch unvollständig und können umgangen werden. Serverseitig existieren RLS-Policies, diese sind jedoch fehlerhaft konfiguriert. Insbesondere erlaubt die Policy allow all auf wardrobe_items vollständigen Zugriff (SELECT, INSERT, UPDATE, DELETE) für alle Nutzer ohne Ownership-Prüfung. Zusätzlich erlaubt eine SELECT true-Policy auf outfits das Auslesen aller Outfits unabhängig vom Besitzer. Damit ist die serverseitige Zugriffskontrolle nicht wirksam, und Manipulationen von Daten über direkte API-Requests sind möglich.",
+                "mitigation": "Strikte serverseitige Validierung aller Eingaben. Autorisierungsprüfungen im Backend. Verwendung sicher signierter Tokens, z. B. JWT."
+              }
+            ]
+          },
+          {
+            "id": "84d29cb6-e9f4-4d57-a2f1-f203109fb01f",
+            "shape": "tm.Store",
+            "type": "tm.Store",
+            "zIndex": 3,
+            "z": 3,
+            "position": {
+              "x": 760,
+              "y": 80
+            },
+            "size": {
+              "width": 320,
+              "height": 100
+            },
+            "attrs": {
+              "body": {
+                "stroke": "#d0021b",
+                "strokeWidth": 2,
+                "strokeDasharray": null
+              },
+              "text": {
+                "text": "wardrobe_items / outfits / outfit_items"
+              },
+              ".element-shape": {
+                "class": "element-shape hasOpenThreats isInScope"
+              },
+              ".element-text": {
+                "class": "element-text hasOpenThreats isInScope"
+              }
+            },
+            "data": {
+              "name": "wardrobe_items / outfits / outfit_items",
+              "type": "tm.Store",
+              "hasOpenThreats": true,
+              "description": "Tabellen und Ressourcen wardrobe_items, outfits und outfit_items aus dem STRIDE-Dokument.",
+              "outOfScope": false
+            },
+            "hasOpenThreats": true,
+            "description": "Tabellen und Ressourcen wardrobe_items, outfits und outfit_items aus dem STRIDE-Dokument.",
+            "outOfScope": false,
+            "threats": [
+              {
+                "threatId": "87942799-3d0e-4057-a7c7-db5f2b052205",
+                "number": 4,
+                "title": "Veränderung von Outfit-Daten",
+                "type": "Tampering",
+                "modelType": "STRIDE",
+                "status": "Open",
+                "severity": "High",
+                "score": "Original-Risiko: Hoch – verletzt Datenintegrität und Nutzervertrauen. | Original-Status: teilweise/riskant",
+                "description": "Gefahr: Unbefugte Nutzer manipulieren Outfits oder Kleidungsstücke anderer User.\nKategorie: Tampering.\nRisiko: Hoch – verletzt Datenintegrität und Nutzervertrauen.\nStatus aus Dokument: teilweise/riskant.\nTechnische Belege: Outfit-Update hat einen Owner-Filter (set-outfeed-details.tsx line 377). Aber Kleidung-Update filtert nur nach id, nicht nach owner_id (edit.tsx line 209); Wash/Repair-Updates ebenfalls nur nach Item-ID (details/[id].tsx line 320). Serverseitig existieren RLS-Policies, diese sind jedoch fehlerhaft: Die Tabelle wardrobe_items erlaubt durch eine allow all-Policy vollständigen Zugriff (SELECT, INSERT, UPDATE, DELETE) für alle Nutzer ohne Ownership-Prüfung. Dadurch können fremde Kleidungsstücke manipuliert werden.",
+                "mitigation": "Prüfung der Besitzrechte (Ownership) bei jeder Änderung. Zugriffskontrolle auf Ressourcen. Logging von Änderungen."
+              },
+              {
+                "threatId": "c5501348-792d-4b77-a1f3-cb7b82d1035a",
+                "number": 7,
+                "title": "Fehlerhafte Sichtbarkeitslogik",
+                "type": "Information disclosure",
+                "modelType": "STRIDE",
+                "status": "Open",
+                "severity": "High",
+                "score": "Original-Risiko: Sehr hoch – betrifft direkt die Privatsphäre der Nutzer. | Original-Status: teilweise",
+                "description": "Gefahr: Private Kleidungsstücke werden unbeabsichtigt öffentlich sichtbar.\nKategorie: Information Disclosure.\nRisiko: Sehr hoch – betrifft direkt die Privatsphäre der Nutzer.\nStatus aus Dokument: teilweise.\nTechnische Belege: Fremde Closets/Outfits werden clientseitig auf public = true gefiltert (useWardrobe.ts line 32, category/[category].tsx line 222, create-outfeed.tsx line 340). Kleidung defaultet beim Edit/Create auf private (edit.tsx line 98). Aber Outfit-Erstellung defaultet auf public (set-outfeed-details.tsx line 210), sie sind jedoch serverseitig nicht abgesichert: wardrobe_items: allow all ignoriert das public-Feld vollständig; outfits: SELECT true erlaubt Zugriff auf alle Outfits. Private Inhalte können dadurch direkt über die API ausgelesen werden.",
+                "mitigation": "Strenge Zugriffskontrollen. Tests der Visibility-Logik. Default auf „private“ setzen."
+              },
+              {
+                "threatId": "82e051d7-d7f8-412c-8fda-4de964804757",
+                "number": 14,
+                "title": "Manipulation von Outfits anderer Nutzer",
+                "type": "Elevation of privilege",
+                "modelType": "STRIDE",
+                "status": "Open",
+                "severity": "High",
+                "score": "Original-Risiko: Hoch | Original-Status: teilweise/riskant",
+                "description": "Gefahr: Unbefugte Änderungen an fremden Outfits.\nKategorie: Elevation of Privilege / Tampering.\nRisiko: Hoch.\nStatus aus Dokument: teilweise/riskant.\nTechnische Belege: Outfit-Update hat einen Owner-Filter (set-outfeed-details.tsx line 377). Aber Kleidung-Update filtert nur nach id, nicht nach owner_id (edit.tsx line 209); Wash/Repair-Updates ebenfalls nur nach Item-ID (details/[id].tsx line 320). Outfits sind durch Owner-Policies bei UPDATE und DELETE teilweise geschützt. Allerdings: wardrobe_items ist vollständig offen (allow all); outfit_items erlaubt Inserts unter Freundschaftsbedingungen. Dadurch können indirekte Manipulationen weiterhin möglich sein.",
+                "mitigation": "Strikte Ownership-Prüfung. Zugriff nur für autorisierte Nutzer."
+              },
+              {
+                "threatId": "eb6580a7-f6a6-42cd-98e4-34800db54c24",
+                "number": 15,
+                "title": "Ungewolltes Teilen privater Inhalte",
+                "type": "Information disclosure",
+                "modelType": "STRIDE",
+                "status": "Open",
+                "severity": "High",
+                "score": "Original-Risiko: Hoch | Original-Status: teilweise",
+                "description": "Gefahr: Private Kleidung wird versehentlich geteilt.\nKategorie: Information Disclosure.\nRisiko: Hoch.\nStatus aus Dokument: teilweise.\nTechnische Belege: Kleidung hat Public/Private UI und startet privat (edit.tsx line 98, edit.tsx line 442). Outfits starten dagegen public und ich sehe keinen Bestätigungsdialog vor dem Veröffentlichen (set-outfeed-details.tsx line 210). Durch die offenen RLS-Policies (wardrobe_items, outfits) können auch als privat markierte Inhalte öffentlich ausgelesen werden.",
+                "mitigation": "Bestätigungsdialoge vor dem Teilen. Klare UI für Sichtbarkeitseinstellungen."
+              }
+            ]
+          },
+          {
+            "id": "6ef078d2-e065-4b71-9521-df217bb6cd4b",
+            "shape": "tm.Store",
+            "type": "tm.Store",
+            "zIndex": 4,
+            "z": 4,
+            "position": {
+              "x": 80,
+              "y": 280
+            },
+            "size": {
+              "width": 330,
+              "height": 100
+            },
+            "attrs": {
+              "body": {
+                "stroke": "#d0021b",
+                "strokeWidth": 2,
+                "strokeDasharray": null
+              },
+              "text": {
+                "text": "Bild-Upload / Fotos / Supabase Storage"
+              },
+              ".element-shape": {
+                "class": "element-shape hasOpenThreats isInScope"
+              },
+              ".element-text": {
+                "class": "element-text hasOpenThreats isInScope"
+              }
+            },
+            "data": {
+              "name": "Bild-Upload / Fotos / Supabase Storage",
+              "type": "tm.Store",
+              "hasOpenThreats": true,
+              "description": "Bildauswahl, Uploads, Fotos, EXIF/Metadata und Supabase Storage aus dem STRIDE-Dokument.",
+              "outOfScope": false
+            },
+            "hasOpenThreats": true,
+            "description": "Bildauswahl, Uploads, Fotos, EXIF/Metadata und Supabase Storage aus dem STRIDE-Dokument.",
+            "outOfScope": false,
+            "threats": [
+              {
+                "threatId": "1b358d97-5bca-482d-a9a1-b725346e02d5",
+                "number": 5,
+                "title": "Bild-Upload mit Schadcode",
+                "type": "Tampering",
+                "modelType": "STRIDE",
+                "status": "Open",
+                "severity": "High",
+                "score": "Original-Risiko: Hoch – kann Backend oder andere Nutzer gefährden. | Original-Status: teilweise",
+                "description": "Gefahr: Angreifer laden manipulierte Dateien hoch, die Schadcode enthalten oder Sicherheitslücken ausnutzen.\nKategorie: Tampering.\nRisiko: Hoch – kann Backend oder andere Nutzer gefährden.\nStatus aus Dokument: teilweise.\nTechnische Belege: Upload verlangt angemeldeten User (useImageUpload.ts line 49) und ImagePicker beschränkt Auswahl auf Bilder (useImageUpload.ts line 23). Supabase Storage hat global 50 MiB Limit (supabase/config.toml line 112). Es gibt eine Sightengine-Moderation für offensive Inhalte (image-moderation/index.ts line 17), aber das ist kein Malware-Scanning und keine echte Dateityp-Signaturprüfung.",
+                "mitigation": "Validierung von Dateitypen und -größen. Malware-Scanning der Uploads. Speicherung in isolierter Umgebung."
+              },
+              {
+                "threatId": "f362992c-59a9-42df-97d8-f72199d8fdec",
+                "number": 8,
+                "title": "Überlastung durch Bild-Uploads",
+                "type": "Denial of service",
+                "modelType": "STRIDE",
+                "status": "Open",
+                "severity": "Medium",
+                "score": "Original-Risiko: Mittel | Original-Status: teilweise",
+                "description": "Gefahr: Massenuploads führen zu Ressourcenerschöpfung.\nKategorie: Denial of Service.\nRisiko: Mittel.\nStatus aus Dokument: teilweise.\nTechnische Belege: Supabase Storage Limit 50 MiB vorhanden. Kein Client-Limit vor dem Upload, keine Upload-Rate-Limits im App-Code, keine Queue/Backpressure sichtbar.",
+                "mitigation": "Upload-Limits definieren. Skalierbare Infrastruktur nutzen."
+              },
+              {
+                "threatId": "d752b446-0394-4224-8571-8b3b4057a939",
+                "number": 11,
+                "title": "Übermäßiger Zugriff auf Fotos",
+                "type": "Information disclosure",
+                "modelType": "STRIDE",
+                "status": "Open",
+                "severity": "Medium",
+                "score": "Original-Risiko: Mittel | Original-Status: teilweise",
+                "description": "Gefahr: App greift auf mehr Bilder zu als notwendig.\nKategorie: Information Disclosure.\nRisiko: Mittel.\nStatus aus Dokument: teilweise.\nTechnische Belege: Die App fragt Foto-/Kamera-Berechtigungen mit erklärenden iOS-Strings an (app.json line 22) und ImagePicker wird gezielt für Auswahl verwendet. Ob iOS “limited library” sauber genutzt wird, ist im Code nicht explizit erkennbar.",
+                "mitigation": "Minimalprinzip bei Berechtigungen. Transparente Nutzerabfragen."
+              },
+              {
+                "threatId": "a6521f74-448b-4a75-a412-4820a6d00a0b",
+                "number": 12,
+                "title": "EXIF-Daten-Leak",
+                "type": "Information disclosure",
+                "modelType": "STRIDE",
+                "status": "Open",
+                "severity": "Medium",
+                "score": "Original-Risiko: Mittel | Original-Status: NICHT BEHOBEN",
+                "description": "Gefahr: Standortdaten in Bildern werden ungewollt preisgegeben.\nKategorie: Information Disclosure.\nRisiko: Mittel.\nStatus aus Dokument: NICHT BEHOBEN.\nTechnische Belege: Es gibt keine explizite EXIF-/Metadata-Entfernung. ImagePicker mit Editing/Qualität kann Metadaten reduzieren (useImageUpload.ts line 23), aber das ist kein garantierter Security-Fix.",
+                "mitigation": "Entfernen von Metadaten vor Speicherung."
+              }
+            ]
+          },
+          {
+            "id": "5edbd806-d26c-44be-9c8d-b9fcf566c548",
+            "shape": "tm.Store",
+            "type": "tm.Store",
+            "zIndex": 5,
+            "z": 5,
+            "position": {
+              "x": 480,
+              "y": 280
+            },
+            "size": {
+              "width": 300,
+              "height": 100
+            },
+            "attrs": {
+              "body": {
+                "stroke": "#d0021b",
+                "strokeWidth": 2,
+                "strokeDasharray": null
+              },
+              "text": {
+                "text": "Audit-Logs / Aktionshistorie"
+              },
+              ".element-shape": {
+                "class": "element-shape hasOpenThreats isInScope"
+              },
+              ".element-text": {
+                "class": "element-text hasOpenThreats isInScope"
+              }
+            },
+            "data": {
+              "name": "Audit-Logs / Aktionshistorie",
+              "type": "tm.Store",
+              "hasOpenThreats": true,
+              "description": "Audit-Logs, unveränderbare Logs, Trigger/Migrations und created_at-Hinweise aus dem STRIDE-Dokument.",
+              "outOfScope": false
+            },
+            "hasOpenThreats": true,
+            "description": "Audit-Logs, unveränderbare Logs, Trigger/Migrations und created_at-Hinweise aus dem STRIDE-Dokument.",
+            "outOfScope": false,
+            "threats": [
+              {
+                "threatId": "c2584284-5ad0-4e82-b29e-95799de9ba75",
+                "number": 6,
+                "title": "Abstreiten von Aktionen",
+                "type": "Repudiation",
+                "modelType": "STRIDE",
+                "status": "Open",
+                "severity": "Medium",
+                "score": "Original-Risiko: Mittel – erschwert Nachvollziehbarkeit und Konfliktlösung. | Original-Status: NICHT BEHOBEN",
+                "description": "Gefahr: Ein Nutzer behauptet, bestimmte Aktionen, z. B. Erstellen/Teilen eines Outfits, nicht durchgeführt zu haben.\nKategorie: Repudiation.\nRisiko: Mittel – erschwert Nachvollziehbarkeit und Konfliktlösung.\nStatus aus Dokument: NICHT BEHOBEN.\nTechnische Belege: Keine Audit-Logs, keine unveränderbaren Logs, keine Trigger/Migrations im Repo. Normale created_at-Felder werden abgefragt, aber keine beweissichere Aktionshistorie.",
+                "mitigation": "Detaillierte Audit-Logs. Speicherung von Zeitstempeln und Benutzer-IDs. Unveränderbare Log-Strukturen."
+              }
+            ]
+          },
+          {
+            "id": "ae95b7db-a482-4ffa-ae53-099acf3bb06f",
+            "shape": "tm.Process",
+            "type": "tm.Process",
+            "zIndex": 6,
+            "z": 6,
+            "position": {
+              "x": 840,
+              "y": 280
+            },
+            "size": {
+              "width": 280,
+              "height": 100
+            },
+            "attrs": {
+              "body": {
+                "stroke": "#d0021b",
+                "strokeWidth": 2,
+                "strokeDasharray": null
+              },
+              "text": {
+                "text": "API / Profile / Suche"
+              },
+              ".element-shape": {
+                "class": "element-shape hasOpenThreats isInScope"
+              },
+              ".element-text": {
+                "class": "element-text hasOpenThreats isInScope"
+              }
+            },
+            "data": {
+              "name": "API / Profile / Suche",
+              "type": "tm.Process",
+              "hasOpenThreats": true,
+              "description": "Profilzugriffe, Suche, API-/Profil-Requests und Profil-Scraping aus dem STRIDE-Dokument.",
+              "outOfScope": false
+            },
+            "hasOpenThreats": true,
+            "description": "Profilzugriffe, Suche, API-/Profil-Requests und Profil-Scraping aus dem STRIDE-Dokument.",
+            "outOfScope": false,
+            "threats": [
+              {
+                "threatId": "299a2ed6-9a17-4bc2-bdd0-8221d237ba83",
+                "number": 9,
+                "title": "API Flooding",
+                "type": "Denial of service",
+                "modelType": "STRIDE",
+                "status": "Open",
+                "severity": "Medium",
+                "score": "Original-Risiko: Mittel | Original-Status: teilweise",
+                "description": "Gefahr: Massive Anzahl an Requests überlastet das Backend.\nKategorie: Denial of Service.\nRisiko: Mittel.\nStatus aus Dokument: teilweise.\nTechnische Belege: Supabase Auth hat Rate-Limits für Auth-Endpunkte; generelle API-/Profil-/Friendship-Requests haben im Code kein Rate-Limiting. Supabase API max_rows = 1000 begrenzt Antwortgröße (supabase/config.toml line 18), aber nicht Request-Frequenz.",
+                "mitigation": "Rate Limiting. API-Gateways einsetzen."
+              },
+              {
+                "threatId": "913d22f7-c750-444e-9769-61e6c0ed906b",
+                "number": 13,
+                "title": "Stalking / Profil-Scraping",
+                "type": "Information disclosure",
+                "modelType": "STRIDE",
+                "status": "Open",
+                "severity": "Medium",
+                "score": "Original-Risiko: Mittel | Original-Status: teilweise",
+                "description": "Gefahr: Profile werden systematisch ausgelesen.\nKategorie: Information Disclosure.\nRisiko: Mittel.\nStatus aus Dokument: teilweise.\nTechnische Belege: Suche limitiert Ergebnisse auf 20 (find-new-friends.tsx line 45), aber Profile sind per Suche abrufbar, ohne Rate-Limit oder Privacy-Einstellungen im Code. Die Policy Allow select all profiles erlaubt vollständigen Lesezugriff auf alle Profile (SELECT true für public).",
+                "mitigation": "Privacy-Einstellungen. Rate Limiting für Profilzugriffe."
+              }
+            ]
+          },
+          {
+            "id": "ee285c74-48c0-4d33-83a8-0430cbdb3ed1",
+            "shape": "tm.Store",
+            "type": "tm.Store",
+            "zIndex": 7,
+            "z": 7,
+            "position": {
+              "x": 480,
+              "y": 480
+            },
+            "size": {
+              "width": 260,
+              "height": 100
+            },
+            "attrs": {
+              "body": {
+                "stroke": "#d0021b",
+                "strokeWidth": 2,
+                "strokeDasharray": null
+              },
+              "text": {
+                "text": "friendships"
+              },
+              ".element-shape": {
+                "class": "element-shape hasOpenThreats isInScope"
+              },
+              ".element-text": {
+                "class": "element-text hasOpenThreats isInScope"
+              }
+            },
+            "data": {
+              "name": "friendships",
+              "type": "tm.Store",
+              "hasOpenThreats": true,
+              "description": "friendships-Inserts, requester_id-RLS und Freundschaftsanfragen aus dem STRIDE-Dokument.",
+              "outOfScope": false
+            },
+            "hasOpenThreats": true,
+            "description": "friendships-Inserts, requester_id-RLS und Freundschaftsanfragen aus dem STRIDE-Dokument.",
+            "outOfScope": false,
+            "threats": [
+              {
+                "threatId": "011a29a6-d02c-4ed1-9713-ee8f6a3753d7",
+                "number": 10,
+                "title": "Spam durch Freundschaftsanfragen",
+                "type": "Denial of service",
+                "modelType": "STRIDE",
+                "status": "Open",
+                "severity": "Medium",
+                "score": "Original-Risiko: Niedrig bis Mittel | Original-Status: NICHT BEHOBEN",
+                "description": "Gefahr: System wird durch massenhafte Anfragen belastet.\nKategorie: Denial of Service.\nRisiko: Niedrig bis Mittel.\nStatus aus Dokument: NICHT BEHOBEN.\nTechnische Belege: friendships werden direkt inserted (find-new-friends.tsx line 75), Status sogar sofort \"accepted\" (find-new-friends.tsx line 80). Kein CAPTCHA, kein Zeitlimit, kein Request-/Accept-Flow erkennbar. Die RLS-Policy stellt nur sicher, dass requester_id = auth.uid() ist.",
+                "mitigation": "Limitierung von Anfragen pro Zeit. CAPTCHA einsetzen."
+              }
+            ]
+          }
+        ],
+        "size": {
+          "height": 650,
+          "width": 1200
+        }
+      }
+    ]
+  }
+}
